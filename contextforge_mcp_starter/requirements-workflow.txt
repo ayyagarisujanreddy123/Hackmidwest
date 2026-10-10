@@ -1,0 +1,3 @@
+# Optional workflow dependencies; the existing connectivity requirements stay pinned.
+-r requirements.txt
+strands-agents==1.59.0
