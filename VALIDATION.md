@@ -698,3 +698,22 @@ The owner explicitly requested all repository changes be pushed. Earlier protect
 | G3 | Verify the submitted code | 69 automated tests, all 24 Python syntax checks, five JSON parses, JavaScript/shell syntax, dependency consistency, and diff whitespace checks passed | PASS: executed before commit/push |
 
 Published source checkpoints are listed in [tasks/checkpoints.md](tasks/checkpoints.md). Infrastructure remains unprovisioned, and the new finance tools still await public-tunnel repair and DevRev resync; GitHub publication does not establish either acceptance gate.
+
+## Finance transport recovery and Tesla extraction — October 11, 2026
+
+The reported Tesla connection failure was resolved by replacing only the expired finance Quick Tunnel. The existing token remains valid. Computer's custom-server URL was read-only, so replacement **yFinance Mac** (`_custom__yfinance-mac`) reused the saved October 11, 2:02 AM finance PAT connection. Nine read-only tools and two original tools retain Always ask preferences. The old yFinance binding was removed from the personal agent after verification; its registered server and saved connection remain.
+
+| ID | Expected | Executed observation | Result |
+| --- | --- | --- | --- |
+| F21 | Restore authenticated public finance MCP | All eight doctor stages and 32 public HTTPS/MCP SDK checks passed, including missing/incorrect token rejection, 11-tool discovery, and all nine finance tools | PASS |
+| F22 | Retry exact `GetPriceHistory(TSLA, 1mo, 1d, 252)` in Computer | Ping returned the actual pong; history returned `ok`, 22 rows, September 10–October 9, `truncated=false`, retrieved at `2026-10-11T13:53:19.197932+00:00` | PASS |
+| F23 | Save the real Tesla CSV without overwriting AAPL | Computer CSV copied to `outputs/yfinance-tsla-20261011/TSLA_daily_prices_1mo.csv`; 11 columns, all values/timestamps match independent public MCP data; both original AAPL files remain byte-identical to the published baseline | PASS |
+| F24 | Exercise exact-date range, batch, and CSV export | TSLA September range has 21 rows; TSLA/AAPL/MSFT batch/export has 63 rows, 21 per symbol; actual Canvas file is 14,274 bytes and SHA-256 matches the MCP result | PASS |
+| F25 | Execute the other five finance tools in Computer | Quote, symbol search, profile, quarterly income statement, and news each returned `ok` with source references; statement nulls and truncation preserved | PASS |
+| F26 | Handle market differences and invalid inputs | AAPL weekend `no_data`; BTC weekend two UTC rows; partial batch ten valid rows plus missing symbol; invalid date, URL symbol, and news limit 11 rejected | PASS |
+| F27 | Preserve original timestamp on a sequential cache hit | First TSLA quote `cached=false`; second `cached=true`, age 3.153 seconds; both retain `2026-10-11T14:09:40.567400+00:00` | PASS |
+| F28 | Preserve services and remove the stale agent binding | Finance server PID 66829 and original listener PID 32614 unchanged; only finance tunnel changed from 55599 to 75067. New connector remains Connected with 11 tools; old binding removed from agent | PASS |
+
+The initial simultaneous quote requests both missed the cache; a subsequent strictly sequential test passed. The existing Python implementation and dependencies were unchanged, so the earlier 69 offline and 23 ASGI results were not re-run for this operational/documentation recovery.
+
+Private receipts: `finance-refined-https-20261011T134634033120Z.json` and `finance-devrev-recovery-20261011.json`; doctor evidence: `state/mac-finance/refinement-baseline/doctor-after-repair.json`. Computer acceptance consists of observed summaries plus independent artifact/provider comparisons, not a full raw DevRev capture. These outcomes supersede the failed finance preflight; original ContextForge remote connectivity remains a separate issue. Exact hashes, files, current temporary URL, and repair procedure are recorded in [FINANCE_RECOVERY.md](FINANCE_RECOVERY.md).

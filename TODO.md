@@ -28,9 +28,9 @@
 - [x] Execute 32 real loopback network/MCP SDK checks against the running Mac service; verify the actual 63-row AAPL/MSFT/NVDA September CSV and its checksum.
 - [x] Reload only finance; local authenticated discovery shows 11 tools and Yahoo quote succeeds. Original ContextForge process and finance tunnel process preserved.
 - [x] Diagnose independent Quick Tunnel expiration: its old hostname no longer resolves and the tunnel log reports `Tunnel not found` from 08:05:05 UTC, before finance reload.
-- [ ] Receive the owner's choice on replacing the expired temporary finance URL; retain the current setup until approval.
-- [ ] Verify the refined tools through real public HTTPS and resync the existing yFinance connector without changing its token or permissions.
-- [ ] Execute new range and CSV tools in DevRev Computer and verify the resulting Canvas CSV against its MCP checksum.
+- [x] Resolve the reported Tesla outage by replacing only the expired finance tunnel; preserve the token and original services.
+- [x] Pass 32 real public HTTPS checks and connect replacement yFinance Mac with the saved PAT and Always ask preferences; the existing server URL is read-only.
+- [x] Execute all nine finance tools, new range and CSV tools, and edge cases in Computer; verify Canvas CSV bytes against the MCP checksum.
 
 ## Preserved ContextForge status
 
@@ -130,3 +130,13 @@ export CONTEXTFORGE_ENABLE_WORKFLOW=1
 ```
 
 This command retains the tested workflow mode and is preserved for a future authorized restart. **Do not restart now:** the owner explicitly requested that the working server stay running during finance validation. The reuse-ID fix still awaits a future live rerun. Keep the source on port 8001, demo view on 8002, and current tunnel running. Infrastructure, account tier, and AWS permissions remain unchanged.
+
+## Completed finance recovery — October 11, 2026
+
+- [x] Restore public transport with a finance-tunnel-only restart; all eight doctor stages PASS.
+- [x] Connect yFinance Mac to the new temporary URL using the existing saved finance PAT; verify 11 tools with Always ask.
+- [x] Execute the exact Tesla month request and deliver the actual 22-row Computer CSV without changing the existing AAPL file.
+- [x] Execute all nine finance tools, 63-row September batch/export, stock/crypto weekends, partial symbols, rejected inputs, and a sequential quote cache hit.
+- [x] Verify saved export bytes and SHA-256, preserve original service processes, and remove the expired yFinance binding from the personal agent.
+
+Current results supersede the earlier failed finance preflight. See [FINANCE_RECOVERY.md](FINANCE_RECOVERY.md) for exact outputs, timestamps, receipt names, and temporary-hostname limitations.

@@ -39,6 +39,12 @@ The owner requested all repository changes be pushed to GitHub. A normal push ad
 
 Before publication, all 69 automated tests, 24 Python syntax checks, five JSON parses, JavaScript/shell syntax checks, dependency checks, and whitespace checks passed. The 62 publication candidates contained no detected credentials, including the actual private finance secret. No private token, environment, runtime log, database, virtual environment, or approval archive was staged. The refined DevRev public connection remains pending the owner's decision about replacing the expired Quick Tunnel URL; publishing code does not resolve that transport failure.
 
+## Verified finance recovery — October 11 UTC
+
+The reported Tesla outage was an expired finance Quick Tunnel. A tunnel-only replacement and new yFinance Mac binding restored Computer access using the existing saved PAT and Always ask preferences. All eight doctor stages, 32 public HTTPS checks, and fresh Computer calls for all nine finance tools pass. The exact Tesla request produced a verified 22-row CSV; September batch/export produced 63 rows with matching Canvas bytes and MCP checksum. Weekend, partial-symbol, invalid-input, and sequential cache checks also pass. The expired binding was removed from the personal agent; the original finance and ContextForge server processes are unchanged.
+
+The checkpoint includes the recovery runbook, actual public-stock CSVs, and updated finance acceptance records. Private evidence and credentials remain ignored. Other pending documentation from independent demo/workflow work is preserved outside this checkpoint. See [FINANCE_RECOVERY.md](../FINANCE_RECOVERY.md) and F21–F28 in [VALIDATION.md](../VALIDATION.md).
+
 ## Initial publication from normal Terminal
 
 The target repository was empty when inspected. Run each command in order; stop on an error and do not force-push. Complete any GitHub authentication locally without sharing credentials.

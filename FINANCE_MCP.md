@@ -2,6 +2,8 @@
 
 The current priority is a read-only Yahoo Finance connector in DevRev Computer. ContextForge development and AWS deployment are paused; its code and validation history remain available.
 
+**Current Computer connector: yFinance Mac** (`_custom__yfinance-mac`), with 11 discovered tools and Always ask preferences. All nine finance tools passed fresh Computer calls on October 11, 2026. The expired older yFinance binding has been removed from the personal agent. See [the recovery record and verified Tesla CSV](FINANCE_RECOVERY.md).
+
 ## Tool contract
 
 | MCP tool | Inputs | Result |
@@ -16,7 +18,7 @@ The current priority is a read-only Yahoo Finance connector in DevRev Computer. 
 | `get_price_history_batch` | 1–5 symbols; period or both dates; interval/limit | Normalized, deduplicated symbols and per-symbol outcomes; successful data remains available when others fail |
 | `export_price_history_csv` | Same selection as batch history | UTF-8 CSV content, filename, manifest, row count, coverage, byte count, and SHA-256 |
 
-The original `ping` and `inspect_demo_capability` remain available. `finance_server.py` runs an isolated **Yahoo Finance Mac** server on `127.0.0.1:8003/mcp`, with workflow generation disabled. The existing ContextForge server on port 8000 and its connection remain available. Combined finance registration in `server.py` is still opt-in through `CONTEXTFORGE_ENABLE_FINANCE=1`.
+The original `ping` and `inspect_demo_capability` remain available. `finance_server.py` runs an isolated **Yahoo Finance Mac** server on `127.0.0.1:8003/mcp`, with workflow generation disabled. The existing ContextForge server on port 8000 and its connector configuration are preserved. Combined finance registration in `server.py` is still opt-in through `CONTEXTFORGE_ENABLE_FINANCE=1`.
 
 ## Data and error handling
 
@@ -74,19 +76,19 @@ After validated finance code changes, reload only its MCP process:
 .venv/bin/python mac_host.py doctor
 ```
 
-`reload` preserves the tunnel process and hostname; it does not repair an expired tunnel. No token rotation or fresh PAT entry is needed for tool additions. Resync the existing yFinance connector with its saved finance connection after checking public HTTPS.
+`reload` preserves the tunnel process and hostname; it does not repair an expired tunnel. No token rotation or fresh PAT entry is needed for tool additions. Resync the current yFinance Mac connector with its saved finance connection after checking public HTTPS.
 
 Use the **current** `public_endpoint` printed by `status`, including `/mcp`, in **Settings → My Computer → Connectors → Add custom connector**:
 
 | Field | Value |
 | --- | --- |
-| Server name | Yahoo Finance Mac |
+| Server name | yFinance Mac |
 | Server URL | The current HTTPS `public_endpoint` from `mac_host.py status` |
-| Server slug | `yahoo-finance-mac` |
+| Server slug | `yfinance-mac` |
 | Service | Personal access token (PAT) |
-| Connection | A new private connection owned by you |
+| Connection | Your existing saved finance PAT connection, or a new private connection on first setup |
 
-Copy the server token privately, then paste it only into the connector's PAT field, without a `Bearer` prefix:
+If no saved finance connection exists, copy the server token privately, then paste it only into the connector's PAT field, without a `Bearer` prefix:
 
 ```zsh
 .venv/bin/python mac_host.py copy-token
@@ -96,7 +98,17 @@ Finish **Next → Set up** and verify the actual discovered tools. Clear the cli
 
 If connecting still reports a sync failure after entering the correct token, open the server's **View details → menu → Resync tools**. Select the saved finance-token connection there and click **Next**. Server discovery has its own saved-connection binding; entering a new personal PAT does not replace an older connection selected for resync. After resync completes, finish the personal **Connect** flow.
 
-Keep the Mac awake and connected to the internet while using the connector. User agents stop at logout; they start again at login. A Quick Tunnel hostname changes when its process restarts, including after reboot, so update the DevRev URL then. Quick Tunnels have no uptime guarantee and do not support SSE; this server uses stateless Streamable HTTP with JSON responses. A stable URL requires a named tunnel and a domain you control. See [Cloudflare's documented limitations](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/) and [Apple's LaunchAgent lifecycle](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html).
+Keep the Mac awake and connected to the internet while using the connector. User agents stop at logout; they start again at login. A Quick Tunnel hostname changes when its process restarts, including after reboot. In the observed Computer UI, an existing custom server's URL is read-only: a changed hostname requires a replacement custom connector using the same saved finance connection. Verify its tools and permission preferences before removing the expired binding from the agent. Quick Tunnels have no uptime guarantee and do not support SSE; this server uses stateless Streamable HTTP with JSON responses. A stable URL requires a named tunnel and a domain you control. See [Cloudflare's documented limitations](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/) and [Apple's LaunchAgent lifecycle](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingLaunchdJobs.html).
+
+If `status` reports `tunnel_status="expired"`, retries and PAT re-entry cannot restore that hostname. Restart only the finance tunnel, then inspect the new endpoint and require a complete doctor PASS:
+
+```zsh
+launchctl kickstart -k "gui/$(id -u)/ai.contextforge.finance-tunnel"
+.venv/bin/python mac_host.py status
+.venv/bin/python mac_host.py doctor
+```
+
+This changes the temporary finance hostname. Use the current endpoint in a replacement custom connector, reuse the saved finance PAT, and verify a live Ping before extraction. Select **Always ask** for both tool groups to retain the current preferences. After successful verification, use **Remove from agent** on the expired connector; its registered server and saved connection can remain. The October 11 repair required no token rotation or finance-server restart.
 
 To stop only these finance services and disable their login launch:
 
@@ -110,7 +122,7 @@ To stop only these finance services and disable their login launch:
 
 1. Inspect a complete real-provider receipt: authentication and discovery must pass, and each of the nine finance tools must return usable data and source references. An offline fixture test does not meet this gate.
 2. Start the isolated finance-only process and HTTPS tunnel with `mac_host.py start`. Leave ContextForge on port 8000, its source, approval ledger, and current tunnel untouched.
-3. Add **Yahoo Finance Mac** with a private connection in Computer as described above.
+3. Add **yFinance Mac** with the saved finance connection or a private first-time connection in Computer as described above.
 4. In a fresh Computer session, verify 11 discovered tools (nine finance tools plus the two original tools). Call search, quote, profile, period/range history, batch history, statement, news, and CSV export. Include partial missing-symbol results and stock/crypto weekend windows. Save the CSV verbatim in Canvas and verify its checksum, row count, dates, and symbols. Record actual responses, provider timestamps, source references, and errors.
 5. Confirm an invalid symbol URL and out-of-range limit are rejected. Recheck the existing ContextForge connector independently. Stop only the new finance process/tunnel if testing fails.
 
@@ -120,7 +132,7 @@ Only executed DevRev calls establish Computer integration. A successful ASGI rea
 
 Ask Computer to call `get_stock_quote` for AAPL, retrieve its last month's daily price history, and show three recent news headlines with source links. The response must reflect actual tool results, including an upstream failure if Yahoo Finance is unavailable.
 
-For extraction, ask: **“Use yFinance to export daily AAPL, MSFT, and NVDA prices from September 1, 2026 through September 30, 2026. Call ExportPriceHistoryCsv with start_date 2026-09-01 and end_date 2026-10-01, save data.csv verbatim in Canvas, and report the per-symbol status, row count, date coverage, truncation, and SHA-256.”**
+For extraction, ask: **“Use yFinance Mac to export daily AAPL, MSFT, and NVDA prices from September 1, 2026 through September 30, 2026. Call ExportPriceHistoryCsv with start_date 2026-09-01 and end_date 2026-10-01, save data.csv verbatim in Canvas, and report the per-symbol status, row count, date coverage, truncation, and SHA-256.”**
 
 ## Refinement validation — October 11, 2026
 
@@ -128,9 +140,11 @@ For extraction, ask: **“Use yFinance to export daily AAPL, MSFT, and NVDA pric
 - **PASS:** 23 authenticated in-process readiness checks across all nine tools and ten additional real-provider scenarios. Receipt: `finance-readiness-20261011T095943300761Z.json`.
 - **PASS:** 32 network checks through the running Mac service and MCP Python SDK, including all nine tools, market/date scenarios, and eight rejected inputs. The September AAPL/MSFT/NVDA CSV contains 63 rows, with byte count and SHA-256 verified. Receipt: `finance-refined-loopback-20261011T102738278509Z.json`.
 - **PASS:** finance-only reload preserved the tunnel process and original ContextForge process. The running local server accepts the existing secret, exposes 11 tools, and returns an AAPL quote. Receipt: `state/mac-finance/refinement-baseline/doctor-live-after-startup.json`.
-- **FAIL / pending repair approval:** the old temporary public hostname no longer resolves. Cloudflare's log first reports `Tunnel not found` at 08:05:05 UTC, before the 10:00:47 UTC finance reload. The user chose to keep the URL; replacing this expired tunnel and changing the existing DevRev URL requires their pending choice. Refined public HTTPS and new Computer-tool acceptance are not yet established.
+- **Resolved transport failure:** Cloudflare's log first reported `Tunnel not found` at 08:05:05 UTC, before the 10:00:47 UTC finance reload. After the reported Tesla failure, only the finance tunnel was replaced. The existing PAT works; the finance MCP process and original ContextForge process were unchanged.
+- **PASS:** all eight doctor stages and 32 real public HTTPS/MCP SDK checks, including authentication, exact 11-tool discovery, all nine finance tools, provider scenarios, and eight rejected inputs. Receipt: `finance-refined-https-20261011T134634033120Z.json`.
+- **DevRev live acceptance PASS:** replacement **yFinance Mac** reuses the saved finance connection and has 11 tools with Always ask preferences. Ping and all nine finance tools returned actual results. The exact Tesla month request produced 22 rows; September TSLA/AAPL/MSFT export produced 63 rows and its saved Canvas bytes matched the MCP SHA-256. Weekend, partial-symbol, invalid-input, and sequential cache tests passed. The old binding was removed from the personal agent. Receipt: `finance-devrev-recovery-20261011.json`.
 
-See [the refinement contract](FINANCE_REFINEMENTS.md) and [VALIDATION.md](VALIDATION.md) for scope and receipts.
+See [the refinement contract](FINANCE_REFINEMENTS.md), [the recovery record](FINANCE_RECOVERY.md), and [VALIDATION.md](VALIDATION.md) for scope and receipts.
 
 ## Initial validation — October 11, 2026, before refinements
 

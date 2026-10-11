@@ -2,7 +2,7 @@
 
 ## Objective and authorized scope
 
-Extend the working Mac-hosted yFinance connector so DevRev Computer can retrieve complete bounded history, request exact dates, and export several tickers directly to CSV. The user approved implementation and additional use-case tests on October 11, 2026, and chose to retain the current tunnel URL. Existing authentication, the token, the tunnel, and the original ContextForge process stay in place.
+Extend the working Mac-hosted yFinance connector so DevRev Computer can retrieve complete bounded history, request exact dates, and export several tickers directly to CSV. The user approved implementation and additional use-case tests on October 11, 2026, initially retaining the current tunnel URL. After that temporary tunnel independently expired, the reported Tesla connection failure was resolved by replacing only the finance tunnel and connecting **yFinance Mac** with the same saved PAT. Existing authentication, token, tool approval preferences, and original ContextForge process are preserved. See [the recovery record](FINANCE_RECOVERY.md).
 
 ## Contracts and build order
 
@@ -52,13 +52,13 @@ Run commands from `contextforge_mcp_starter`:
 - [x] Cache timestamps/expiry, transient retries, rate limits, timeouts and concurrent provider limits are proved with controlled fixtures.
 - [x] Doctor separates credential, local service, public tunnel and upstream provider problems with no secret exposure.
 - [x] Existing authentication, host restrictions and workflow approval tests pass.
-- [ ] Real public HTTPS calls cover stocks, an ETF, crypto, a foreign exchange timezone and a holiday/weekend window.
-- [ ] DevRev resync discovers the new tools and actual Computer calls exercise range and CSV extraction.
+- [x] Real public HTTPS calls cover stocks, an ETF, crypto, a foreign exchange timezone and a holiday/weekend window.
+- [x] DevRev discovers all 11 tools and actual Computer calls exercise all nine finance tools, range and CSV extraction.
 - [x] Sanitized receipts record timestamps, build hashes and observed outcomes; original service and tunnel continuity is checked independently.
 
 The repository already has substantial uncommitted work. Private file snapshots provide rollback checkpoints without staging unrelated changes. Restart only the separate finance process after offline and real-provider checks pass; leave the tunnel process running to retain its hostname.
 
-Checkpoint: 69 offline tests, 23 real-provider ASGI checks, and 32 network checks through the running local Mac service/MCP SDK pass. A verified three-stock September CSV has 63 rows. Finance reload preserved the existing tunnel process, but Cloudflare had independently expired its temporary URL from 08:05:05 UTC. Local authentication, 11-tool discovery, and Yahoo provider checks pass. Public HTTPS and DevRev acceptance remain pending the owner's decision about replacing the expired URL; do not mark them PASS from local evidence.
+Checkpoint: 69 offline tests, 23 real-provider ASGI checks, 32 loopback checks, and 32 public HTTPS/MCP SDK checks pass. The initial finance reload preserved the tunnel process, but Cloudflare had independently expired its temporary URL from 08:05:05 UTC. A subsequent tunnel-only replacement restored public transport. DevRev's existing server URL was read-only, so a replacement **yFinance Mac** server reused the saved connection and retained Always ask. Fresh Computer calls passed for all nine finance tools, the exact Tesla request, a 63-row September export with an independently matched checksum, stock/crypto weekends, partial symbols, rejected inputs, and a sequential cache hit. The old yFinance binding was removed from the personal agent. Detailed outcomes and private receipt names are in [FINANCE_RECOVERY.md](FINANCE_RECOVERY.md).
 
 ## Sources
 
