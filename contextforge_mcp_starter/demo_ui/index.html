@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ContextForge · Connector proof</title>
+  <link rel="stylesheet" href="/workspace.css">
+  <script src="/workspace.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#workflow">Skip to workflow</a>
+  <header class="masthead">
+    <div class="brand"><span class="mark" aria-hidden="true">CF</span><strong>ContextForge</strong><span class="muted">Connector workspace</span></div>
+    <span class="tag">Synthetic demonstration data</span>
+  </header>
+  <main id="workflow">
+    <div class="heading">
+      <div><p class="eyebrow">A tested capability, reusable in DevRev</p><h1>Support ticket → engineering issues</h1>
+      <p class="intro">Discover the missing context. Validate the connector. Keep a human in control.</p></div>
+      <button id="refresh" type="button">Refresh receipts</button>
+    </div>
+    <p id="connection" class="notice" role="status" aria-live="polite">Loading local proof evidence…</p>
+    <div id="content" hidden>
+      <section class="walkthrough" aria-labelledby="walkthrough-title">
+        <div><p class="eyebrow" id="walkthrough-counter">Three-minute walkthrough · 1 of 5</p>
+          <h2 id="walkthrough-title">The question was blocked</h2>
+          <p id="walkthrough-hint" class="small muted">Begin with the recorded question and Strands decision. Navigation only changes the view.</p>
+        </div>
+        <div class="walkthrough-controls"><span id="walkthrough-time" class="small muted">Suggested: 0:00–0:30</span>
+          <div><button id="previous-step" type="button" disabled>Previous</button><button id="next-step" type="button">Next step</button></div>
+        </div>
+      </section>
+      <nav class="step-picker" aria-label="Walkthrough steps">
+        <button type="button" data-step="0" aria-pressed="true">1 · Gap</button>
+        <button type="button" data-step="1" aria-pressed="false">2 · Validate</button>
+        <button type="button" data-step="2" aria-pressed="false">3 · Approve</button>
+        <button type="button" data-step="3" aria-pressed="false">4 · Reuse</button>
+        <button type="button" data-step="4" aria-pressed="false">5 · Deny</button>
+      </nav>
+      <section id="question-card" class="question" aria-labelledby="question-title">
+        <div><p class="eyebrow" id="question-title">The original question</p><p id="question"></p></div>
+        <div class="current"><span class="muted">Current registry</span><strong id="registry-status"></strong><code id="capability-id"></code></div>
+      </section>
+      <div class="workspace">
+        <section class="panel" aria-labelledby="journey-title">
+          <div class="panel-heading"><h2 id="journey-title">From blocked to approved</h2><span class="tag">Recorded proof</span></div>
+          <p class="muted small">These stages show executed history. They are not a fresh generation run.</p>
+          <ol class="journey" id="journey"></ol>
+          <details id="manifest-details"><summary>Inspect the generated manifest</summary><pre id="manifest"></pre></details>
+          <details id="validation-details"><summary id="checks-summary">Measured validation checks</summary>
+            <div class="table-wrap"><table><caption class="sr-only">Actual connector validation results</caption>
+              <thead><tr><th scope="col">Measured check</th><th scope="col">Actual result</th></tr></thead><tbody id="checks"></tbody>
+            </table></div>
+          </details>
+        </section>
+        <section id="execution-panel" class="panel" aria-labelledby="execution-title">
+          <div class="panel-heading"><h2 id="execution-title">Execution evidence</h2><span id="result-badge" class="tag"></span></div>
+          <p class="muted small">Latest saved MCP receipt for the selected ticket. Run a fresh call in Computer, then refresh here.</p>
+          <div class="ticket-picker" role="group" aria-label="Select proof input">
+            <button type="button" data-ticket="DEMO-101" aria-pressed="true">DEMO-101</button>
+            <button type="button" data-ticket="DEMO-102" aria-pressed="false">DEMO-102</button>
+            <button type="button" data-ticket="DEMO-403" aria-pressed="false">DEMO-403 · denied</button>
+          </div>
+          <div id="result" aria-live="polite"></div>
+          <details id="execution-details"><summary>Inspect execution evidence</summary><pre id="receipt-json"></pre></details>
+          <div class="reuse">
+            <h3>Use it in DevRev Computer</h3>
+            <p class="small muted">Copy this prompt into your authorized Computer session, execute it, then refresh receipts here. Human approval stays in the administrator's CLI.</p>
+            <label for="prompt" class="sr-only">DevRev reuse prompt</label><textarea id="prompt" rows="5" readonly></textarea>
+            <div class="prompt-actions"><button id="copy" type="button">Copy DevRev prompt</button><span id="copy-status" role="status" class="small muted"></span></div>
+          </div>
+        </section>
+      </div>
+      <aside class="limits"><strong>Proof boundaries</strong><p>One read-only source and one connector type. Records are invented, not organizer-approved Enterprise-Bench. Reuse uses the same approved capability through an authenticated Computer connection. AWS hosting remains pending. The shared MCP credential does not establish per-user source permissions.</p></aside>
+    </div>
+  </main>
+  <footer>ContextForge · AWS Strands + Amazon Bedrock · DevRev MCP reuse<span id="dataset"></span></footer>
+</body>
+</html>
