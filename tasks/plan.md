@@ -1,15 +1,35 @@
 # ContextForge Product Plan — v0.1
 
-**Status:** Planning. Web workspace is not implemented or deployed.\
+**Status:** Synthetic backend proof, teammate reuse, real Chrome checks, and timed technical walkthroughs PASS. A live automatic reuse-ID failure has a locally tested fix; restart/live rerun pending. Hosting and the broader interactive workspace remain pending.\
 **Decision:** Web workspace first; DevRev Computer demonstrates reuse.\
 **Team:** Three builders. **Implementation checklist:** [tasks/todo.md](todo.md).\
-**Verified foundation:** Authenticated MCP, user-confirmed DevRev calls, and an executed Nova Micro → Strands → tool → observed result cycle. See [VALIDATION.md](../VALIDATION.md).
+**Verified foundation:** Authenticated MCP, actual Nova/Strands-generated connector, ten live validation checks, explicit human approval, and correct source-backed DEMO-101/DEMO-102 execution through Computer. DEMO-403 remains denied. See [VALIDATION.md](../VALIDATION.md).
+
+**Current execution priority:** Verify the fixed question-driven Strands reuse call live, then rehearse one support-ticket → engineering-issue case. D6 second-user reuse and browser execution pass with fresh network evidence; teammate identity is user-attested. Organizer-approved Enterprise-Bench access and AWS provisioning remain pending. Keep package migration and the broader interactive web product below deferred.
+
+## Immediate demo slice
+
+Build a local browser evidence view alongside the running backend, using existing Starlette/Uvicorn and plain HTML/CSS/JavaScript. It reads the shared registry in SQLite read-only mode and projects only the approved synthetic workflow and execution receipts. Display recorded discovery/generation separately from the latest execution receipt; timestamps and dataset labels stay visible. A copyable prompt takes the selected input into the existing DevRev workflow. Refreshing the view reads evidence and never runs inference or activates a connector.
+
+**Implemented checkpoint:** `demo_view.py` and three `demo_ui/` assets are running from the owner's normal Terminal. Original 41 preparation checks, 22 current ASGI/evidence checks, and 21 native Chrome observations pass. Technical walkthroughs took 74s/70s with fresh live Computer requests; recorded generation/approval stayed labeled. Source/database environment names match the runtime. See [actual evidence](../VALIDATION.md).
+
+**Design contract:** One page with a compact workflow timeline, measured-check table, exact manifest, approval identity/time, and selected-record response. Use readable neutral surfaces, one dark green accent, normal headings, explicit PASS/denied/error text, and no decorative animations. The current Computer tool-result tables informed the evidence density; no existing web design system is present. At narrow widths the two columns stack. Buttons/selectors work by keyboard; source/model text is rendered as text, never executable markup.
+
+**Acceptance:** Actual proof stages and states come from saved evidence; exact current manifest/source/approval bindings are checked; malformed/missing evidence stays unresolved. The UI binds only to loopback port 8002, accepts GET reads with trusted Host checks, and exposes no approval or generation route. Existing MCP/source/tunnel remain unchanged. Verify ASGI routes/privacy and the browser after normal-Terminal startup. A hosted view requires separate authenticated HTTPS access and deployment approval.
+
+**Completed browser polish:** Five keyboard-accessible steps show recorded gap → actual manifest/checks → recorded human approval → sourced answer/reuse → source denial. Navigation focuses evidence, expands details, and selects inputs; it never simulates execution or creates a connector. Suggested speaking durations, readable UTC times, actual capability ID, and sanitized execution details are present. All steps, copying, fresh live receipt refresh, offline error/recovery, and phone layout were inspected in Chrome. A reproduced sticky-guide overlap was fixed and retested. Scope stayed within the three UI assets.
+
+**Current automation correction:** A real `ProposeConnector` call selected reuse with a null ID. Require the model's explicit approved inventory ID in `GapDecision`, describe that requirement in the prompt, and bind the initial result to its capability ID in context. Preserve the runtime membership guard. Thirty-one local schema/SDK/workflow/MCP regressions PASS; do not claim live success until the existing server loads the fix and the exact question is rerun.
 
 ## 1. What the user gets
 
 ContextForge helps an integration owner recover a question that existing approved tools cannot answer. The user asks a question, sees the missing capability, reviews an AI-proposed connector and measured checks, approves the exact configuration, and receives an answer with sources. Another teammate can then use that capability in DevRev Computer.
 
-The first release supports **one approved read-only source and one relationship lookup**. A ticket-to-engineering-issue question is the candidate scenario; it becomes the demo scenario only after actual approved records support that relationship. This is a constrained inventory demonstration, not a claim that DevRev lacks ticket tools.
+The first release supports **one approved read-only source and one relationship lookup**. The confirmed demo is: “Which engineering issue is linked to support ticket DEMO-101? Include its title and source references.” The owner-approved synthetic API supports it, and actual generation/execution receipts prove the relationship. This is a constrained inventory demonstration, not a claim that DevRev lacks ticket tools.
+
+### Automation boundary
+
+The product direction is agents that use project context to identify a missing capability and generate its MCP configuration. For this MVP, an administrator supplies the approved specification, host, read scope, and validation cases once. A user submits the question and ticket ID; agents investigate, generate, validate, and reuse without the user writing code or editing a manifest. Activation waits for an explicitly authorized human. Existing approved capabilities should be selected automatically, with no new approval or reconnect. Custom capabilities run behind the same MCP gateway and dispatcher; generating another server per task is unnecessary for this proof. Broader project inputs and additional capability shapes are deferred until this single loop is reliable.
 
 ### Access points
 
@@ -105,13 +125,13 @@ Web and MCP call the **same runtime**, so approval and disablement affect both. 
 - **Connector builder:** Generate a typed operation/mapping configuration and call the measured validator. It receives real failure feedback and may repair once.
 - **Validator:** Determines results independently of the model. It remains product code after removal of standalone test scripts.
 - Start with the actually tested profile `us.amazon.nova-micro-v1:0` from `us-east-2`. This is a US cross-Region inference profile, not proof that direct single-Region invocation works. [AWS inference-profile documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/inference-profiles-support.html) describes the routing behavior; approved data handling must account for it.
-- Retain bounded calls: gap agent two turns; builder four turns; at most three validator calls; one repair; 180-second workflow deadline. Record actual usage and never automatically switch to a more expensive model.
+- Retain bounded calls: gap agent four turns; builder four turns; at most three validator calls; one repair; 180-second workflow deadline. Record actual usage and never automatically switch to a more expensive model.
 
 ### Data and connector boundaries
 
 The administrator supplies the source URL, host allowlist, contract, validation record IDs, and any source credentials. Generated manifests contain no code, credentials, hosts, or new permissions. Accept only documented GET operations, validate parameters and output, reject redirects, and cap requests at five seconds / 64 KiB.
 
-Preserve dataset labels and source references. No Enterprise-Bench path or record has been confirmed. The synthetic mock API and its records have been removed at the user's request; the business demo therefore needs an approved source before it can answer an enterprise question.
+Preserve dataset labels and source references. No Enterprise-Bench path or record has been confirmed. The earlier prototype was removed; the owner later authorized a new labeled synthetic API for the narrow backend proof. Administrator-approved source inspection is distinct from human approval of a tested connector. Real customer/Enterprise-Bench correctness remains unproven.
 
 ## 5. Access control
 
@@ -127,7 +147,7 @@ Credentials are entered privately during setup, stored server-side, and excluded
 
 ## 6. Backend interfaces and persistence
 
-The HTTP routes are proposed. The MCP dispatcher functions exist as disabled backend groundwork and still need live Computer verification.
+The HTTP action routes below are proposed. Computer has invoked proposal, inventory, and approved dispatcher tools; owner recovery and invited-teammate reuse are verified within the synthetic-source scope. The immediate demo view has read-only evidence routes; activation remains the tested human CLI.
 
 | Interface | Behavior |
 |---|---|
@@ -167,7 +187,7 @@ AWS EC2 is the requested hosting target because Akamai is currently unavailable.
 
 After approval, use one VM, one Python environment, SQLite on persistent disk, and supervised services. Keep MCP on loopback port 8000 and the web service on a separate loopback port. Use an approved HTTPS hostname/gateway; no load balancer, RDS, Kubernetes, or separate queue service is needed for this MVP.
 
-AWS calls use an approved role or existing authenticated profile, without permanent keys in the repository. Only CloudShell inference is proven today; local worker credentials and an EC2 role are not configured. Keep the current Cloudflare/DevRev endpoint alive until its replacement passes actual remote MCP and Computer calls. Verify state survives restart before changing the connector URL.
+AWS calls use an approved role or existing authenticated profile, without permanent keys in the repository. Local profile `contextforge` in `us-east-2` has passed actual Nova Micro inference and Strands tool invocation; no EC2 role is configured. Keep the current Cloudflare/DevRev endpoint alive until its replacement passes actual remote MCP and Computer calls. Verify state survives restart before changing the connector URL.
 
 ## 9. Three-minute live demonstration
 

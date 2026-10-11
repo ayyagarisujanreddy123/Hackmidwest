@@ -1,8 +1,76 @@
 # ContextForge Main Product — Implementation Tasks
 
-**Plan:** [plan.md](plan.md). **Status:** Planning v0.1; tasks below have not been implemented.\
+**Plan:** [plan.md](plan.md). **Status:** Broader product backlog; the immediate backend proof takes priority.\
 **Owners:** B = backend/deployment, A = Strands, D = web/DevRev/demo.\
-Standalone prototype tests and synthetic fixtures were removed on request. Verification means executed product/API/MCP operations with saved receipts; deterministic connector validation remains a product feature.
+The earlier prototype tests/demo were removed on request. The owner later approved a new labeled synthetic source. Verification means executed product/API/MCP operations with saved receipts; deterministic connector validation remains a product feature.
+
+## Immediate backend checkpoint
+
+- [x] Local-profile Nova inference and real Strands tool/result receipt verified.
+- [x] Approved synthetic REST specification, records, restricted validation, and opt-in MCP proposal/dispatcher implemented.
+- [x] Original MCP tools, 401 rejection, source validation, and approval boundaries executed in-process.
+- [x] Fresh ContextForge Workflow baseline calls and actual Strands source inspection reach the live synthetic API (HTTP 200).
+- [x] Distinguish source permission from activation; reject malformed proposal operation IDs and retain the original agent decision. Focused regression checks PASS.
+- [x] Real Strands-generated connector passes live REST validation through DevRev (`20261010T235930202162Z`); candidate stays inactive.
+- [x] Live dispatcher denial and synthetic HTTP 403 hold the approval/source boundaries; raw denied-input agent classification failure recorded separately.
+- [x] Replace approver-label trust with explicit OS administrator policy, interactive confirmation, and persistent approval-event enforcement; 37 local acceptance checks PASS.
+- [x] Human approves the exact tested version; Computer returns the previously blocked answer. Ledger, positive source hashes, changed input, and post-approval 403 verified.
+- [x] Invited teammate reuses the same approved ID: fresh DEMO-102 HTTP 200 and DEMO-403 source HTTP 403; user confirms their own Bench-07 login.
+- [x] One-use-case evidence walkthrough passes real Chrome inspection and technical rehearsals in 74s/70s; recorded history remains labeled.
+- [x] Reproduce the live null reuse-ID failure and pass 31 local checks for the schema/prompt/context correction; existing registry and approval remain unchanged.
+- [ ] Load the fix with an MCP-only restart and verify live Strands chooses the exact approved ID and answers the original question.
+
+Use [the live runbook](../MVP_WORKFLOW.md). Existing modules remain the MVP entry point; preserve the approved local registry, source, token, and tunnel.
+
+## Current follow-up slices
+
+### A — Second-user DevRev reuse (D + B)
+
+**Dependency:** Teammate's own licensed account in Bench-07 and authenticated ContextForge Workflow connection. **Scope:** Runbook and actual Computer calls.
+
+- [x] Teammate confirms Bench-07/card visibility and reports successful connection after the server-token prompt; private setup runbook prepared.
+- [x] Teammate invokes Ping/ListCapabilities; actual supplied responses match the expected baseline and approved inventory.
+- [x] Same approved ID returns DEMO-102 evidence and denies DEMO-403, with fresh matching network receipts and unchanged human approval.
+- [x] User confirms teammate's own Bench-07 login; exact supplied output and 17-check reconciliation saved. Alias not supplied; shared MCP bearer is not claimed as per-user source authorization.
+
+**Verification:** D6 PASS; `devrev-reuse-completion-20261011T013038388953Z.json` references fresh 01:24–01:25 UTC execution receipts and user-attested own-account confirmation. Preserve this evidence; repeat only for rehearsal or new endpoint validation.
+
+### B — Local demo interface (D + B)
+
+**Dependency:** Proven synthetic backend. **Scope:** Four files; no new dependency, agent, connector type, or server approval route.
+
+- [x] Read-only loopback view implemented for actual blocked → generated → tested → human-approved → executed evidence with labels/timestamps; verified in ASGI.
+- [x] Selected-record receipt and copyable DevRev prompt agree in code; incomplete/changed evidence withholds data in executed checks.
+- [x] Thirty view/privacy/configuration checks PASS after environment parity fix; working registry and six backend source hashes unchanged.
+- [x] Real browser, keyboard controls, narrow layout, copy, and fresh receipt refresh verified after normal-Terminal startup; 21 native Chrome observations PASS.
+- [x] Five-step walkthrough, readable times, inspectable evidence, offline error/recovery, 22 current ASGI/evidence checks, and two timed technical rehearsals PASS.
+- [ ] Spoken three-minute presentation includes the one question, correctly labeled generation history, live verified automatic reuse, saved teammate proof, and source denial.
+
+**Verification:** Completed native Chrome checks and 74s/70s technical walkthroughs at `http://127.0.0.1:8002`; receipts are recorded in `VALIDATION.md`. Spoken delivery remains pending. **Files:** `demo_view.py`, `demo_ui/index.html`, `demo_ui/workspace.css`, `demo_ui/workspace.js`.
+
+### C — Enterprise-Bench handoff (B)
+
+**Dependency:** Public schema for preparation; organizer authorization and records/API for actual integration.
+
+- [x] Document public ticket → component/part → engineering-issue relationship and exact source/access inputs still needed; inactive normalized contract denies inspection/execution in five checks.
+- [ ] Keep a separate contract, validation cases, and registry for an authorized replacement source; no fabricated paths/IDs/relations.
+- [ ] Once access arrives, execute the existing validation suite and require fresh human approval; B1 remains pending meanwhile.
+
+**Verification:** Read the official schema; inspect actual licensed records and API contract before writing the concrete adapter. See `ENTERPRISE_BENCH_HANDOFF.md`.
+
+### D — Isolated AWS preparation (B + account owner)
+
+**Dependency:** Confirmed deployment target, account eligibility, runtime identity, HTTPS access, cost cap, and explicit provisioning approval before creation.
+
+- [x] Prepare one-VM service/HTTPS examples, ownership-aware human approval bootstrap, persistence, and rollback gates; five static boundary checks PASS, no installation/provisioning performed.
+- [x] Owner selects temporary Cloudflare HTTPS on EC2; AWS read-only checks verify Free Plan/$120 credits, eligible resources, current Ohio prices, and launch DryRun. Scoped Nova-role/tunnel/package/migration preparation passes 47 local checks.
+- [ ] Obtain approval for the concrete 24-hour/$5 VM/disk/IP/security-group/runtime-role proposal and scheduled stop. Actual Linux/cloudflared/systemd runtime remains NOT TESTED; Caddy is deferred.
+- [ ] Stage independently; verify role-based Nova/Strands, MCP auth, source denial, new human approval, and restart before Computer cutover.
+- [ ] Keep local/tunnel available until hosted and second-user tests pass; no account/IAM changes during preparation.
+
+**Verification:** Review `deploy/README.md`; validate configuration without creating resources. Hosted gates stay NOT TESTED.
+
+The numbered tasks below are the broader product backlog. Do not make package migration a prerequisite for these four slices.
 
 At every completed checkpoint, review, commit, and push the relevant changes according to [checkpoints.md](checkpoints.md). Record the commit ID and actual push result; preserve unsynced changes if Git access is blocked.
 
@@ -73,7 +141,7 @@ Enable `list_capabilities` and `run_capability` once, retaining the baseline too
 **Acceptance criteria:**
 - [ ] Computer discovers and invokes the stable dispatcher tools.
 - [ ] Original question succeeds with the approved capability and correct source references.
-- [ ] A second authorized teammate invokes the same capability for the second record; evidence changes correctly.
+- [x] A second authorized teammate invokes the same capability for the second record; evidence changes correctly. Proven in the retained starter, without package migration.
 
 **Verification:** Save actual Computer outputs for both users/inputs; attempt an unapproved/disabled ID and verify denial. **Likely files:** `mcp_server.py`, integration instructions.
 
@@ -116,9 +184,10 @@ Build the question, capability-review, and answer/reuse panels from real API sta
 Prepare service/gateway configuration and a concrete resource/cost proposal without provisioning anything.
 
 **Acceptance criteria:**
-- [ ] Region, eligible instance, disk, HTTPS method, role permissions, current estimated costs, duration, and teardown are specified.
-- [ ] Account's Free Plan restrictions and $100 credit budget are checked; no upgrade assumed.
-- [ ] Existing tunnel stays available until replacement validation passes; rollback is documented.
+- [x] Region, eligible instance, disk, temporary tunnel, scoped Nova permissions, current cost inputs, proposed duration, and stop/archive handling are specified.
+- [x] Free Tier API confirms active Free Plan and $120 remaining credits; eligible resources and launch permission are checked read-only, with no upgrade.
+- [x] Existing tunnel remains unchanged; isolated staging and rollback are documented.
+- [ ] Owner approves infrastructure/access/budget before creation; real Linux installation still needs execution.
 
 **Verification:** Validate configuration syntax and dependency installation; account owner reviews the concrete proposal and explicitly approves creation. **Likely files:** `deploy/README.md`, service units, HTTPS gateway config.
 
@@ -151,5 +220,5 @@ Follow the timed web-first story in the plan. Show a fresh live recovery, then a
 ## Checkpoint 3 — Ready to demonstrate
 
 - [ ] All product release gates in `plan.md` pass in the deployed environment.
-- [ ] A second teammate successfully reuses the approved capability.
+- [x] A second teammate successfully reuses the approved capability within the shared synthetic-source scope.
 - [ ] Costs and post-event shutdown have an owner; no secrets are visible.

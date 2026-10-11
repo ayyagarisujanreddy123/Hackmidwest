@@ -13,9 +13,31 @@ The owner has instructed contributors and coding agents to **commit and push at 
 5. Push the checkpoint to `origin`. On `main`, run `git push origin main`; on a feature branch, push that branch for review. Do not force-push or overwrite remote work.
 6. Report the commit ID, verification, and push outcome. A failed push leaves the checkpoint unpublished; preserve the local work and explain the blocker. Do not create empty commits solely to mark a checkpoint.
 
-## Environment restrictions
+## Environment access
 
-This coding session cannot write local `.git` metadata or reach GitHub through Git/`gh`. GitHub's authenticated browser interface is available for publishing the reviewed baseline. Initial local Git setup therefore requires the owner's normal Terminal. After setup, agents must still report any tool restriction that prevents a later commit or push; a browser commit must be described accurately.
+Earlier sessions could not write local `.git` metadata or reach GitHub through Git/`gh`; the owner published the initial baseline. The October 11 session now has working Git access: remote fetch, staging, commits, and a normal push to `origin/main` succeeded. Report any future restriction accurately and preserve unpublished work; do not rerun repository initialization or force-push.
+
+## Current backend and demo increment — October 10 local / October 11 UTC
+
+The synthetic backend proof PASS includes actual Strands generation, ten product checks, explicit human approval of `get_ticket_engineering_issues_76f8fc748bff`, correct live DEMO-101/DEMO-102 evidence, and continued source HTTP 403. Approval/receipt reconciliation passed 23 checks. The minimal view and preparation passed 41 checks; the polished view then passed 21 native Chrome observations, 22 current evidence/ASGI checks, and technical rehearsals in 74s/70s with fresh live execution. D6 teammate reuse PASS combines 17 receipt checks with user-confirmed own-account identity. A subsequent real automatic reuse call failed on a null model-selected ID; a focused schema/prompt/context fix passes 31 local regressions and awaits MCP restart/live rerun. Hosted runtime remains untested. Results and earlier failures remain in `VALIDATION.md`.
+
+Staging was blocked by protected `.git` metadata during this earlier increment. Those reviewed workflow/demo changes are now published in the October 11 checkpoint below. The initial publication commands below are historical, not instructions to rerun against the existing repository. Private execution receipts in `validation_logs/` are ignored by Git and must not be added.
+
+## EC2 preparation checkpoint — October 11 UTC
+
+EC2/tunnel plan selected, AWS account/price/eligibility/DryRun checks executed, and 47 local package/migration/MCP checks PASS. Deployment files preserve the complete original approval ledger as a private archive and keep revalidated candidates inactive. No AWS resource or DevRev change was made. Reviewed preparation files are published in `397ba5d`; private bundles, SQLite archives, and receipts remain outside Git.
+
+## Reviewed publication — October 11 UTC
+
+The owner requested all repository changes be pushed to GitHub. A normal push advanced `origin/main` from `6ec6331` to `397ba5d` with these focused commits:
+
+- `6b9ffb2`: human approval, verified capability reuse, and authorized source evidence.
+- `1a76bcd`: local synthetic workflow evidence view.
+- `bfc4bc6`: bounded Yahoo Finance history, batch/CSV tools, and regression tests.
+- `2a6d93e`: private Mac hosting, diagnostics, finance runbook, and public-data sample CSVs.
+- `397ba5d`: isolated deployment preparation and integration handoffs.
+
+Before publication, all 69 automated tests, 24 Python syntax checks, five JSON parses, JavaScript/shell syntax checks, dependency checks, and whitespace checks passed. The 62 publication candidates contained no detected credentials, including the actual private finance secret. No private token, environment, runtime log, database, virtual environment, or approval archive was staged. The refined DevRev public connection remains pending the owner's decision about replacing the expired Quick Tunnel URL; publishing code does not resolve that transport failure.
 
 ## Initial publication from normal Terminal
 
