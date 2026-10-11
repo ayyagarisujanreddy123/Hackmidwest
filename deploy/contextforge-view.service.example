@@ -1,0 +1,23 @@
+[Unit]
+Description=ContextForge read-only synthetic proof view
+After=network-online.target contextforge-mcp.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=contextforge
+Group=contextforge
+WorkingDirectory=/opt/contextforge/contextforge_mcp_starter
+Environment=PYTHONDONTWRITEBYTECODE=1
+EnvironmentFile=/etc/contextforge/source.env
+ExecStart=/opt/contextforge/contextforge_mcp_starter/.venv/bin/python demo_view.py
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

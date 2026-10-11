@@ -1,0 +1,20 @@
+# Preparation only. Supply approved hostname and private hashed-password settings.
+# Do not enable public access until the resource/access proposal is approved.
+{$CONTEXTFORGE_HOSTNAME} {
+    @mcp path /mcp /mcp/*
+    handle @mcp {
+        reverse_proxy 127.0.0.1:8000 {
+            header_up Host 127.0.0.1:8000
+            flush_interval -1
+        }
+    }
+    handle {
+        basic_auth {
+            {$DEMO_VIEW_USER} {$DEMO_VIEW_PASSWORD_HASH}
+        }
+        reverse_proxy 127.0.0.1:8002 {
+            header_up Host 127.0.0.1:8002
+            header_up -Authorization
+        }
+    }
+}

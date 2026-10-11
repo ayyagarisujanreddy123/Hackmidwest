@@ -1,0 +1,25 @@
+[Unit]
+Description=ContextForge bearer-authenticated MCP gateway
+After=network-online.target contextforge-source.service
+Wants=network-online.target contextforge-source.service
+
+[Service]
+Type=simple
+User=contextforge
+Group=contextforge
+WorkingDirectory=/opt/contextforge/contextforge_mcp_starter
+Environment=PYTHONDONTWRITEBYTECODE=1
+EnvironmentFile=/etc/contextforge/source.env
+EnvironmentFile=/etc/contextforge/mcp.env
+ExecStart=/opt/contextforge/contextforge_mcp_starter/.venv/bin/python server.py
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/var/lib/contextforge /opt/contextforge/validation_logs
+
+[Install]
+WantedBy=multi-user.target

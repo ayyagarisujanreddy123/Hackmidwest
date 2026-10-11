@@ -1,0 +1,21 @@
+[Unit]
+Description=ContextForge temporary HTTPS tunnel (MCP only)
+After=network-online.target contextforge-mcp.service
+Wants=network-online.target contextforge-mcp.service
+
+[Service]
+Type=simple
+User=contextforge
+Group=contextforge
+WorkingDirectory=/var/lib/contextforge
+ExecStart=/usr/bin/cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8000 --http-host-header 127.0.0.1:8000 --metrics 127.0.0.1:20241 --loglevel info
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target

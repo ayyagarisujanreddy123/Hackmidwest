@@ -1,0 +1,22 @@
+[Unit]
+Description=ContextForge labeled synthetic read-only source
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=contextforge
+Group=contextforge
+WorkingDirectory=/opt/contextforge/contextforge_mcp_starter
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/opt/contextforge/contextforge_mcp_starter/.venv/bin/python synthetic_source.py
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+
+[Install]
+WantedBy=multi-user.target
