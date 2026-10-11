@@ -1,3 +1,5 @@
 # Optional workflow dependencies; the existing connectivity requirements stay pinned.
 -r requirements.txt
 strands-agents==1.59.0
+# AWS console-login profiles require the CRT extra; preserve the installed SDK version.
+botocore[crt]==1.43.111

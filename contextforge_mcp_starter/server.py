@@ -50,7 +50,9 @@ def inspect_demo_capability() -> dict:
     return {"capability": "connectivity-test", "status": "working", "sample_records": 0}
 
 
-def create_app(*, workflow=None) -> BearerTokenAuthMiddleware:
+def create_app(*, workflow=None, finance=None, port: int = 8000,
+               server_name: str = "ContextForge Connectivity Test",
+               enable_workflow: bool = True) -> BearerTokenAuthMiddleware:
     token = os.environ.get("MCP_TOKEN")
     if not token:
         raise RuntimeError("MCP_TOKEN environment variable is required before starting the server.")
@@ -58,24 +60,36 @@ def create_app(*, workflow=None) -> BearerTokenAuthMiddleware:
         raise RuntimeError("MCP_TOKEN must be a single ASCII token without spaces or line breaks.")
 
     server = FastMCP(
-        "ContextForge Connectivity Test",
+        server_name,
         host="127.0.0.1",
-        port=8000,
+        port=port,
         json_response=True,
         stateless_http=True,
         transport_security=TransportSecuritySettings(
-            allowed_hosts=["127.0.0.1:8000", "localhost:8000"],
+            allowed_hosts=[f"127.0.0.1:{port}", f"localhost:{port}"],
             allowed_origins=[],
         ),
     )
     server.add_tool(ping)
     server.add_tool(inspect_demo_capability)
-    if workflow is None and os.environ.get("CONTEXTFORGE_ENABLE_WORKFLOW") == "1":
+    if finance is None and os.environ.get("CONTEXTFORGE_ENABLE_FINANCE") == "1":
+        from finance import FinanceTools
+        finance = FinanceTools()
+    if finance is not None:
+        finance.register(server)
+    if enable_workflow and workflow is None and os.environ.get("CONTEXTFORGE_ENABLE_WORKFLOW") == "1":
         from capability_runtime import CapabilityRuntime
         workflow = CapabilityRuntime.from_environment()
-    if workflow is not None:
+    if enable_workflow and workflow is not None:
+        from strands_workflow import ConnectorWorkflow
+        generation = ConnectorWorkflow(workflow)
         server.add_tool(workflow.list_capabilities, name="list_capabilities")
-        server.add_tool(workflow.run_capability, name="run_capability")
+        async def run_capability(capability_id: str, inputs: dict) -> dict:
+            """Execute an approved read-only capability; retain actual HTTP execution evidence."""
+            return await workflow.run_capability(capability_id, inputs, entry_point="mcp")
+
+        server.add_tool(run_capability, name="run_capability")
+        server.add_tool(generation.propose_connector, name="propose_connector")
     return BearerTokenAuthMiddleware(server.streamable_http_app(), token)
 
 

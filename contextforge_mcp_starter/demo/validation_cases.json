@@ -1,0 +1,9 @@
+{
+  "dataset": "SYNTHETIC_CONTEXTFORGE_DEMO_V1",
+  "known": [
+    {"ticket_id": "DEMO-101", "issue_ids": ["DEMO-ENG-201"], "source_refs": ["synthetic://contextforge/tickets/DEMO-101", "synthetic://contextforge/issues/DEMO-ENG-201"]},
+    {"ticket_id": "DEMO-102", "issue_ids": ["DEMO-ENG-202"], "source_refs": ["synthetic://contextforge/tickets/DEMO-102", "synthetic://contextforge/issues/DEMO-ENG-202"]}
+  ],
+  "missing": "DEMO-404",
+  "forbidden": "DEMO-403"
+}

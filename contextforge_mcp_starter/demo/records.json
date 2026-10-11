@@ -1,0 +1,30 @@
+{
+  "dataset": "SYNTHETIC_CONTEXTFORGE_DEMO_V1",
+  "description": "Invented demonstration records approved by the project owner. Not Enterprise-Bench or customer data.",
+  "tickets": {
+    "DEMO-101": {
+      "ticket_id": "DEMO-101",
+      "ticket_subject": "Synthetic ticket: SSO login fails after identity-provider migration",
+      "related_issues": [
+        {
+          "id": "DEMO-ENG-201",
+          "title": "Synthetic issue: normalize SAML audience after migration",
+          "source_ref": "synthetic://contextforge/issues/DEMO-ENG-201"
+        }
+      ],
+      "source_refs": ["synthetic://contextforge/tickets/DEMO-101", "synthetic://contextforge/issues/DEMO-ENG-201"]
+    },
+    "DEMO-102": {
+      "ticket_id": "DEMO-102",
+      "ticket_subject": "Synthetic ticket: CSV export times out for large reports",
+      "related_issues": [
+        {
+          "id": "DEMO-ENG-202",
+          "title": "Synthetic issue: paginate report export queries",
+          "source_ref": "synthetic://contextforge/issues/DEMO-ENG-202"
+        }
+      ],
+      "source_refs": ["synthetic://contextforge/tickets/DEMO-102", "synthetic://contextforge/issues/DEMO-ENG-202"]
+    }
+  }
+}

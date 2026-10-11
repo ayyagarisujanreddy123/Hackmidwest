@@ -1,0 +1,46 @@
+{
+  "openapi": "3.0.3",
+  "info": {"title": "ContextForge synthetic read-only source", "version": "1.0.0"},
+  "x-contextforge-dataset": "SYNTHETIC_CONTEXTFORGE_DEMO_V1",
+  "x-contextforge-read-only-inspection-authorized": true,
+  "paths": {
+    "/tickets/{ticket_id}/engineering-issues": {
+      "get": {
+        "operationId": "get_ticket_engineering_issues",
+        "summary": "Look up engineering issues explicitly linked to a synthetic ticket",
+        "x-contextforge-allowed": true,
+        "parameters": [{"name": "ticket_id", "in": "path", "required": true, "schema": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,63}$"}}],
+        "responses": {
+          "200": {
+            "description": "Labeled synthetic ticket evidence",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["dataset", "ticket_id", "ticket_subject", "related_issues", "source_refs"],
+                  "properties": {
+                    "dataset": {"type": "string", "enum": ["SYNTHETIC_CONTEXTFORGE_DEMO_V1"]},
+                    "ticket_id": {"type": "string"},
+                    "ticket_subject": {"type": "string"},
+                    "related_issues": {
+                      "type": "array", "maxItems": 20,
+                      "items": {
+                        "type": "object", "additionalProperties": false,
+                        "required": ["id", "title", "source_ref"],
+                        "properties": {"id": {"type": "string"}, "title": {"type": "string"}, "source_ref": {"type": "string", "minLength": 1}}
+                      }
+                    },
+                    "source_refs": {"type": "array", "minItems": 1, "maxItems": 30, "items": {"type": "string", "minLength": 1}}
+                  }
+                }
+              }
+            }
+          },
+          "403": {"description": "DEMO-403 simulates a forbidden record; never generate around this boundary"},
+          "404": {"description": "Ticket identifier does not exist in the synthetic source"}
+        }
+      }
+    }
+  }
+}
